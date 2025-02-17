@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 type Product = {
   id: number;
   title: string;
@@ -5,13 +6,14 @@ type Product = {
   descripton: string;
 };
 export default async function ProductsPage() {
-  const detailResponse = await fetch("http://localhost:3001/products/1")
-  const details = await detailResponse.json()
-  const response = await fetch("http://localhost:3001/products",{
-    cache: "no-store"
-  })
+  const response = await fetch("http://localhost:3001/products", {
+    cache: "no-store",
+  });
   const products = await response.json();
-  console.log(products);
+
+  const cookiesStore = cookies();
+  (await cookiesStore).get("theme");
+
   return (
     <ul className="space-y-4 p-4">
       {products.map((product: Product) => {
@@ -23,7 +25,6 @@ export default async function ProductsPage() {
             <h2 className="text-lg font-medium">{product.title}</h2>
             <p>{product.descripton}</p>
             <p className="text-lg font-medium">${product.price}</p>
-            <p>{details.price}</p>
           </li>
         );
       })}

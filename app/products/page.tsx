@@ -5,7 +5,11 @@ type Product = {
   descripton: string;
 };
 export default async function ProductsPage() {
-  const response = await fetch("http://localhost:3001/products");
+  const detailResponse = await fetch("http://localhost:3001/products/1")
+  const details = await detailResponse.json()
+  const response = await fetch("http://localhost:3001/products",{
+    cache: "no-store"
+  })
   const products = await response.json();
   console.log(products);
   return (
@@ -19,6 +23,7 @@ export default async function ProductsPage() {
             <h2 className="text-lg font-medium">{product.title}</h2>
             <p>{product.descripton}</p>
             <p className="text-lg font-medium">${product.price}</p>
+            <p>{details.price}</p>
           </li>
         );
       })}

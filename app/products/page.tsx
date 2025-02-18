@@ -1,4 +1,4 @@
-import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
 type Product = {
   id: number;
   title: string;
@@ -6,13 +6,11 @@ type Product = {
   descripton: string;
 };
 export default async function ProductsPage() {
-  const response = await fetch("http://localhost:3001/products", {
-    cache: "no-store",
-  });
+  const response = await fetch("http://localhost:3001/products");
   const products = await response.json();
 
-  const cookiesStore = cookies();
-  (await cookiesStore).get("theme");
+  // const cookiesStore = cookies();
+  // (await cookiesStore).get("theme");
 
   return (
     <ul className="space-y-4 p-4">
